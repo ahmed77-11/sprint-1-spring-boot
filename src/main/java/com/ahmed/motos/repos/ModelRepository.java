@@ -6,8 +6,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-@RepositoryRestResource(path = "cat")
-@CrossOrigin(origins = "http://localhost:4200/")
+@RepositoryRestResource(path = "mod")
+@CrossOrigin("http://localhost:4200/")
 public interface ModelRepository extends JpaRepository<Model,Long> {
 
 }

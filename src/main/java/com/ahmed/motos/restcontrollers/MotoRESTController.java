@@ -6,6 +6,7 @@ import com.ahmed.motos.dto.MotoDTO;
 import com.ahmed.motos.entities.Moto;
 import com.ahmed.motos.service.MotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,25 +25,26 @@ public class MotoRESTController {
     @Autowired
     MotoService motoService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/all",method = RequestMethod.GET)
     public List<MotoDTO> getAllMotos(){
         return motoService.getAllMotos();
     }
-    @RequestMapping(value="/{id}",method=RequestMethod.GET)
+    @RequestMapping(value="/getbyid/{id}",method=RequestMethod.GET)
     public MotoDTO getMotoById(@PathVariable("id") Long id){
         return motoService.getMoto(id);
     }
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = "/addmoto",method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MotoDTO createMoto(@RequestBody(required = false) MotoDTO moto) {
-         return motoService.saveMoto(moto);
-
+        System.out.println("added");
+        return motoService.saveMoto(moto);
     }
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(path = "/updatemoto",method = RequestMethod.PUT)
     public MotoDTO updateProduit(@RequestBody MotoDTO moto) {
     	return motoService.updateMoto(moto);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delmoto/{id}",method = RequestMethod.DELETE)
     public void deleteMoto(@PathVariable("id") long id){
         motoService.deleteMotoById(id);
     }
