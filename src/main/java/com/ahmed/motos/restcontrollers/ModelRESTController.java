@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mod")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ModelRESTController {
     @Autowired
     ModelRepository modelRepository;
