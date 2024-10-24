@@ -1,15 +1,12 @@
 package com.ahmed.motos.entities;
 
 import  java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Moto {
@@ -22,12 +19,16 @@ public class Moto {
 	
 	@ManyToOne
 	private Model model;
+
+
+	@OneToMany(mappedBy = "moto")
+	private List<Image> images;
 	
 	
 	public Moto() {
 		super();
 	}
-	
+
 	public Moto(String marqueMoto, Double prixMoto, Date dateCreation) {
 		super();
 		this.marqueMoto = marqueMoto;
@@ -47,6 +48,9 @@ public class Moto {
 	public void setMarqueMoto(String marqueMoto) {
 		this.marqueMoto = marqueMoto;
 	}
+
+
+
 	public Double getPrixMoto() {
 		return prixMoto;
 	}
@@ -59,7 +63,7 @@ public class Moto {
 	public void setDateCreation(Date dateCreation) {
 		this.dateCreation = dateCreation;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Moto [idMoto=" + idMoto + ", marqueMoto=" + marqueMoto + ", prixMoto=" + prixMoto + ", dateCreation="
@@ -74,4 +78,11 @@ public class Moto {
 		this.model = model;
 	}
 
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
 }

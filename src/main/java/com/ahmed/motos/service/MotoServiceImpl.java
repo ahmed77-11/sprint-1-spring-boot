@@ -4,8 +4,11 @@ import java.util.List;import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.ahmed.motos.dto.MotoDTO;
+import com.ahmed.motos.entities.Image;
 import com.ahmed.motos.entities.Model;
 
+import com.ahmed.motos.repos.ImageRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
@@ -19,15 +22,29 @@ public class MotoServiceImpl implements MotoService {
 	@Autowired
 	MotoRepository motoRepository;
 	@Autowired
-	ModelMapper modelMappper; 
+	ModelMapper modelMappper;
+
+	@Autowired
+	ImageRepository imageRepository;
+
 	@Override
 	public MotoDTO saveMoto(MotoDTO m) {
 		return convertEntityToDto(motoRepository.save(convertDtoToEntity(m)));
 	}
 	@Override
 	public MotoDTO updateMoto(MotoDTO m) {
-		return convertEntityToDto(motoRepository.save(convertDtoToEntity(m)));
+		Long oldMotoImageId =
+				this.getMoto(m.getIdMoto()).getImage().getIdImage();
+		Long newMotoImageId = m.getImage().getIdImage();
+		MotoDTO motoUpdated = convertEntityToDto(motoRepository.save(convertDtoToEntity(m)));
+		if (oldMotoImageId != newMotoImageId) { //si l'image a été modifiée
+			imageRepository.deleteById(oldMotoImageId);
+		}
+		return motoUpdated;
 	}
+
+
+
 	@Override
 	public void deleteMoto(Moto m) {
 		motoRepository.delete(m);

@@ -1,6 +1,8 @@
 package com.ahmed.motos.dto;
 
 import java.util.Date;
+
+import com.ahmed.motos.entities.Image;
 import com.ahmed.motos.entities.Model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +19,7 @@ public class MotoDTO {
 	private Double prixMoto;
 	private Date dateCreation;
 	private Model model;
+	private Image image;
 	
 	
 }
