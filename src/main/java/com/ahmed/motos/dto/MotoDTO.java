@@ -20,6 +20,7 @@ public class MotoDTO {
 	private Date dateCreation;
 	private Model model;
 	private Image image;
+	private Image[] images;
 	
 	
 }

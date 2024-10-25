@@ -43,7 +43,7 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod.POST,"/api/addmoto/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/updatemoto/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/delmoto/**").hasAuthority("ADMIN")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

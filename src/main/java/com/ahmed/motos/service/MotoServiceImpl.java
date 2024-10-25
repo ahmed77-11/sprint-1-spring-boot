@@ -1,5 +1,8 @@
 package com.ahmed.motos.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -28,18 +31,14 @@ public class MotoServiceImpl implements MotoService {
 	ImageRepository imageRepository;
 
 	@Override
-	public MotoDTO saveMoto(MotoDTO m) {
-		return convertEntityToDto(motoRepository.save(convertDtoToEntity(m)));
+	public Moto saveMoto(Moto m) {
+		return motoRepository.save(m);
 	}
 	@Override
-	public MotoDTO updateMoto(MotoDTO m) {
-		Long oldMotoImageId =
-				this.getMoto(m.getIdMoto()).getImage().getIdImage();
-		Long newMotoImageId = m.getImage().getIdImage();
-		MotoDTO motoUpdated = convertEntityToDto(motoRepository.save(convertDtoToEntity(m)));
-		if (oldMotoImageId != newMotoImageId) { //si l'image a été modifiée
-			imageRepository.deleteById(oldMotoImageId);
-		}
+	public Moto updateMoto(Moto m) {
+
+		Moto motoUpdated = motoRepository.save(m);
+
 		return motoUpdated;
 	}
 
@@ -51,19 +50,32 @@ public class MotoServiceImpl implements MotoService {
 	}
 	@Override
 	public void deleteMotoById(Long id) {
+		Moto m=getMoto(id);
+		//suuprimer l'image avant de supprimer le produit
+
+		try {
+			Files.delete(Paths.get(System.getProperty("user.home")+"/images111/"+m.getImagePath()));
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+
 		motoRepository.deleteById(id);
 	}
 	@Override
-	public MotoDTO getMoto(Long id) {
-		return convertEntityToDto(motoRepository.findById(id).get());
+	public Moto getMoto(Long id) {
+		return motoRepository.findById(id).get();
 	}
-	@Override
-	public List<MotoDTO> getAllMotos() {
-		return motoRepository.findAll().stream()
-				.map(this::convertEntityToDto)
-				.collect(Collectors.toList());
-	}
+//	@Override
+//	public List<MotoDTO> getAllMotos() {
+//		return motoRepository.findAll().stream()
+//				.map(this::convertEntityToDto)
+//				.collect(Collectors.toList());
+//	}
 
+	@Override
+	public List<Moto> getAllMotos(){
+		return motoRepository.findAll();
+	}
 	@Override
 	public List<Moto> findByMarqueMoto(String marque) {
 		return this.motoRepository.findByMarqueMoto(marque);

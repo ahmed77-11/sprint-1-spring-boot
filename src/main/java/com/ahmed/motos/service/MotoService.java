@@ -7,12 +7,12 @@ import com.ahmed.motos.entities.Model;
 import com.ahmed.motos.entities.Moto;
 
 public interface MotoService {
-	MotoDTO saveMoto(MotoDTO m);
-	MotoDTO updateMoto(MotoDTO m);
+	Moto saveMoto(Moto m);
+	Moto updateMoto(Moto m);
 	void deleteMoto(Moto m);
 	void deleteMotoById(Long id);
-	MotoDTO getMoto(Long id);
-	List<MotoDTO> getAllMotos();
+	Moto getMoto(Long id);
+	List<Moto> getAllMotos();
 	List<Moto> findByMarqueMoto(String marque);
 	List<Moto> findByMarqueMotoContains(String marque);
 	List<Moto> findByMarquePrix (String marque, Double prix);

@@ -26,21 +26,21 @@ public class MotoRESTController {
     MotoService motoService;
 
     @RequestMapping(path = "/all",method = RequestMethod.GET)
-    public List<MotoDTO> getAllMotos(){
+    public List<Moto> getAllMotos(){
         return motoService.getAllMotos();
     }
     @RequestMapping(value="/getbyid/{id}",method=RequestMethod.GET)
-    public MotoDTO getMotoById(@PathVariable("id") Long id){
+    public Moto getMotoById(@PathVariable("id") Long id){
         return motoService.getMoto(id);
     }
     @RequestMapping(path = "/addmoto",method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public MotoDTO createMoto(@RequestBody(required = false) MotoDTO moto) {
+    public Moto createMoto(@RequestBody(required = false) Moto moto) {
         System.out.println("added");
         return motoService.saveMoto(moto);
     }
     @RequestMapping(path = "/updatemoto",method = RequestMethod.PUT)
-    public MotoDTO updateProduit(@RequestBody MotoDTO moto) {
+    public Moto updateProduit(@RequestBody Moto moto) {
     	return motoService.updateMoto(moto);
     }
 

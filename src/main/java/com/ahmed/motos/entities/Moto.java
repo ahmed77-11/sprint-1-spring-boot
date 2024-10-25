@@ -23,10 +23,23 @@ public class Moto {
 
 	@OneToMany(mappedBy = "moto")
 	private List<Image> images;
+
+	private String imagePath;
 	
 	
 	public Moto() {
 		super();
+	}
+
+
+
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImagePath() {
+		return imagePath;
 	}
 
 	public Moto(String marqueMoto, Double prixMoto, Date dateCreation) {
